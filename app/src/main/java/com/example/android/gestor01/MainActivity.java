@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -24,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     List<String> usuarios = new ArrayList<String>();
 
     ArrayAdapter<String> adapter;
+    ContactoDao contactoDao;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
         nombreEditTextView = (EditText) findViewById(R.id.editTextNombre);
         emailEditTextView = (EditText) findViewById(R.id.editTextEmail);
         guardarButton = (Button) findViewById(R.id.buttonGuardar);
+
+        //iniciar la BBDD
+        contactoDao = new ContactoDao(this);
 
         usuarioListView = (ListView)findViewById(R.id.listViewUsuario);
         adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,android.R.id.text1,usuarios);
@@ -53,6 +56,12 @@ public class MainActivity extends AppCompatActivity {
                     String mensaje = getString(R.string.Bienvenido_msje)+""+email;
 
                     Toast.makeText(getApplicationContext(),mensaje, Toast.LENGTH_LONG).show();
+
+                    Contacto c = new Contacto();
+                    c.setNombre(nombre);
+                    c.setEmail(email);
+                    contactoDao.crear(c);
+
                     String datos = nombre+""+email;
 
                     usuarios.add(datos);
@@ -75,4 +84,4 @@ public class MainActivity extends AppCompatActivity {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 }
-}
+
