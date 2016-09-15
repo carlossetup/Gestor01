@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     EditText emailEditTextView;
     Button guardarButton;
     ListView usuarioListView;
-    List<String> usuarios = new ArrayList<String>();
+    List<String> Contactos = new ArrayList<String>();
 
     ArrayAdapter<String> adapter;
     ContactoDao contactoDao;
